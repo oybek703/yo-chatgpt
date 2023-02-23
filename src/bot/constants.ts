@@ -1,10 +1,10 @@
-export const languageConversationId = 'change-language'
+export const changeLangWizardId = 'change-language'
 export const askConversationId = 'ask'
 
 export const botUserName = 't.me/@yochatgpt_bot'
 
 export enum LanguageTextKeys {
-  startCommand = 'start',
+  startCommand = '/start',
   mainSelectOptions = 'mainSelectOptions',
   helloText = 'helloText',
   askQuestionText = 'askQuestionText',
