@@ -36,6 +36,7 @@ export class DatabaseManager {
       newUser.lastName = user.last_name
       newUser.firstName = user.first_name
       await this.userRepository.save(newUser)
+      return newUser
     } else {
       if (existingUser.userName !== user.username) {
         existingUser.userName = user.username

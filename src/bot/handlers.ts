@@ -6,8 +6,8 @@ import { BotContext } from '../interfaces/bot.interfaces'
 import { BotCommand } from 'telegraf/typings/core/types/typegram'
 import { session, Telegraf } from 'telegraf'
 import { BotScenes } from './scenes/bot-scenes'
-import { getSettingsKeyboard } from './keyboards'
 import { backToMain, chooseSettings } from '../utils/bot.utils'
+import { formatJoinTime } from '../utils'
 
 export class Handlers {
   scenes: BotScenes
@@ -40,7 +40,13 @@ export class Handlers {
 
   onStartCommand = () => {
     this.bot.start(async (ctx: BotContext) => {
-      await this.dbManager.saveUser(ctx.message?.from)
+      const newUser = await this.dbManager.saveUser(ctx.message?.from)
+      if (newUser) {
+        const infoText = formatJoinTime(newUser)
+        await ctx.telegram.sendMessage(`-100${process.env.GROUP_ID}`, infoText, {
+          parse_mode: 'HTML'
+        })
+      }
       await ctx.replyWithHTML(ctx.translate(LanguageTextKeys.helloText))
       return backToMain(ctx)
     })
