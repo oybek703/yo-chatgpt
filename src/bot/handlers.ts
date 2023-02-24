@@ -7,12 +7,12 @@ import { BotCommand } from 'telegraf/typings/core/types/typegram'
 import { session, Telegraf } from 'telegraf'
 import { BotScenes } from './scenes/bot-scenes'
 import { getSettingsKeyboard } from './keyboards'
-import { backToMain } from '../utils/bot.utils'
+import { backToMain, chooseSettings } from '../utils/bot.utils'
 
 export class Handlers {
   scenes: BotScenes
   private readonly dbManager: DatabaseManager
-  private readonly i18n: I18n<BotContext>
+  private readonly i18n: I18n
   private commands: BotCommand[] = [
     { command: LanguageTextKeys.startCommand, description: 'Start bot' }
   ]
@@ -27,7 +27,7 @@ export class Handlers {
     await this.setBotCommands()
     this.bot.use(session())
     this.scenes.init()
-    this.bot.use(this.i18n)
+    this.bot.use(this.i18n as any)
     this.onStartCommand()
     this.onAskQuestion()
     this.onSettings()
@@ -53,22 +53,19 @@ export class Handlers {
   }
 
   onSettings = () => {
-    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.settingsBtnText), (ctx: BotContext) => {
-      const settingsKeyboard = getSettingsKeyboard(ctx)
-      return ctx.reply(ctx.translate(LanguageTextKeys.chooseSettingsText), settingsKeyboard)
-    })
+    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.settingsBtnText), chooseSettings)
     this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.changeLanguageBtnText), ctx =>
       ctx.scene.enter(changeLangWizardId)
     )
   }
 
   onNavigateBack = () => {
-    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.backBtnText), ctx => backToMain(ctx))
+    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.backBtnText), backToMain)
   }
 
   onAboutBot = () => {
     this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.aboutBotBtnText), ctx =>
-      ctx.reply(ctx.translate(LanguageTextKeys.aboutBotText))
+      ctx.replyWithHTML(ctx.translate(LanguageTextKeys.aboutBotText))
     )
   }
 }

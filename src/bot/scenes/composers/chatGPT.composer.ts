@@ -4,7 +4,6 @@ import { BotContext } from '../../../interfaces/bot.interfaces'
 import { Composer } from 'telegraf'
 import { LanguageTextKeys } from '../../constants'
 import { getBackKeyboard } from '../../keyboards'
-import { I18nClass } from '../../locales/i18n.class'
 import { backToMain } from '../../../utils/bot.utils'
 import { Question } from '../../../database/entities/question'
 import { ChatGPTClass } from '../../../chatGPT.class'
@@ -12,7 +11,6 @@ import { ChatGPTClass } from '../../../chatGPT.class'
 export class ChatGPTComposer extends BaseComposer {
   startAsking = (): Composer<BotContext> => {
     return this.createComposer(composer => {
-      composer.use(I18nClass.getInstance())
       composer.on(message('text'), async ctx => {
         const backKeyboard = getBackKeyboard(ctx)
         await ctx.reply(ctx.translate(LanguageTextKeys.askQuestionText), backKeyboard)
@@ -23,7 +21,6 @@ export class ChatGPTComposer extends BaseComposer {
 
   handleQuestion = (): Composer<BotContext> => {
     return this.createComposer(composer => {
-      composer.use(I18nClass.getInstance())
       composer.on(message('text'), async ctx => {
         const { text } = ctx.message
         if (this.checkBackText(text, ctx) || this.checkStartCommand(text)) {

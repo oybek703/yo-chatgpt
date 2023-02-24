@@ -3,9 +3,8 @@ import { message } from 'telegraf/filters'
 import { BotContext } from '../../../interfaces/bot.interfaces'
 import { Composer } from 'telegraf'
 import { LanguageTextKeys } from '../../constants'
-import { getLanguagesKeyboard } from '../../keyboards'
-import { I18nClass } from '../../locales/i18n.class'
-import { backToMain } from '../../../utils/bot.utils'
+import { getLanguagesKeyboard, getSettingsKeyboard } from '../../keyboards'
+import { backToMain, chooseSettings } from '../../../utils/bot.utils'
 
 export class ChangeLangComposer extends BaseComposer {
   showLanguagesKeyboard = async (ctx: BotContext) => {
@@ -15,7 +14,6 @@ export class ChangeLangComposer extends BaseComposer {
 
   startSettings = (): Composer<BotContext> => {
     return this.createComposer(composer => {
-      composer.use(I18nClass.getInstance())
       composer.on(message('text'), async ctx => {
         await this.showLanguagesKeyboard(ctx)
         return ctx.wizard.next()
@@ -25,7 +23,6 @@ export class ChangeLangComposer extends BaseComposer {
 
   switchLang = (): Composer<BotContext> => {
     return this.createComposer(composer => {
-      composer.use(I18nClass.getInstance())
       composer.on(message('text'), async ctx => {
         const { text } = ctx.message
         if (this.checkStartCommand(text)) {
@@ -33,8 +30,8 @@ export class ChangeLangComposer extends BaseComposer {
           return ctx.scene.leave()
         }
         if (this.checkBackText(text, ctx)) {
-          await this.showLanguagesKeyboard(ctx)
-          return
+          await chooseSettings(ctx)
+          return ctx.scene.leave()
         }
         const ruText = ctx.translate(LanguageTextKeys.ruLangBtnText)
         const enText = ctx.translate(LanguageTextKeys.enLangBtnText)
