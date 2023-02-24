@@ -7,7 +7,7 @@ import { BotCommand } from 'telegraf/typings/core/types/typegram'
 import { session, Telegraf } from 'telegraf'
 import { BotScenes } from './scenes/bot-scenes'
 import { backToMain, chooseSettings } from '../utils/bot.utils'
-import { formatJoinTime } from '../utils'
+import { formatUserStartedBot } from '../utils'
 
 export class Handlers {
   scenes: BotScenes
@@ -41,8 +41,10 @@ export class Handlers {
   onStartCommand = () => {
     this.bot.start(async (ctx: BotContext) => {
       const newUser = await this.dbManager.saveUser(ctx.message?.from)
+      // Send about new joined user to the group
       if (newUser) {
-        const infoText = formatJoinTime(newUser)
+        const usersCount = await this.dbManager.getUsersCount()
+        const infoText = formatUserStartedBot(newUser, usersCount)
         await ctx.telegram.sendMessage(`-100${process.env.GROUP_ID}`, infoText, {
           parse_mode: 'HTML'
         })

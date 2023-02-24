@@ -49,6 +49,14 @@ export class DatabaseManager {
     return this.userRepository.findOneBy({ telegramUserId })
   }
 
+  async getUsersCount() {
+    return this.userRepository.count()
+  }
+
+  async getQuestionsCount() {
+    return this.questionRepository.count()
+  }
+
   async saveQuestion(question: Question) {
     const newQuestion = new Question()
     newQuestion.text = question.text

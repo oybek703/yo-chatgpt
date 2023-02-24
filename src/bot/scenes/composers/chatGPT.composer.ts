@@ -7,6 +7,7 @@ import { getBackKeyboard } from '../../keyboards'
 import { backToMain } from '../../../utils/bot.utils'
 import { Question } from '../../../database/entities/question'
 import { ChatGPTClass } from '../../../chatGPT.class'
+import { formatSendQuestion } from '../../../utils'
 
 export class ChatGPTComposer extends BaseComposer {
   startAsking = (): Composer<BotContext> => {
@@ -52,6 +53,10 @@ export class ChatGPTComposer extends BaseComposer {
         })
         question.answeredAt = new Date()
         await this.dbManager.saveQuestion(question)
+        // Send info about question to group
+        const questionsCount = await this.dbManager.getQuestionsCount()
+        const sendQuestionText = formatSendQuestion(ctx.from, question, questionsCount)
+        await ctx.telegram.sendMessage(`-100${process.env.GROUP_ID}`, sendQuestionText)
         await ctx.reply(ctx.translate(LanguageTextKeys.moreQuestionText))
         return
       })
