@@ -15,7 +15,6 @@ export enum LanguageTextKeys {
   moreQuestionText = 'moreQuestionText',
   shareText = 'shareText',
   pleaseWait = 'pleaseWait',
-  chooseOption = 'chooseOption',
   aboutBotBtnText = 'aboutBotBtnText',
   settingsBtnText = 'settingsBtnText',
   changeLanguageBtnText = 'changeLanguageBtnText',

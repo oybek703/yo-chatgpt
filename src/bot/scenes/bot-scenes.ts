@@ -2,7 +2,7 @@ import { Scenes, Telegraf } from 'telegraf'
 import { DatabaseManager } from '../../database/database-manager'
 import { BotContext } from '../../interfaces/bot.interfaces'
 import { ChangeLangComposer } from './composers/change-lang.composer'
-import { changeLangWizardId, chatGPTWizardId, LanguageTextKeys } from '../constants'
+import { changeLangWizardId, chatGPTWizardId } from '../constants'
 import { ChatGPTComposer } from './composers/chatGPT.composer'
 
 export class BotScenes {
