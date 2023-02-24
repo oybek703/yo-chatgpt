@@ -2,20 +2,23 @@ import { Scenes, Telegraf } from 'telegraf'
 import { DatabaseManager } from '../../database/database-manager'
 import { BotContext } from '../../interfaces/bot.interfaces'
 import { ChangeLangComposer } from './composers/change-lang.composer'
-import { changeLangWizardId, LanguageTextKeys } from '../constants'
+import { changeLangWizardId, chatGPTWizardId, LanguageTextKeys } from '../constants'
+import { ChatGPTComposer } from './composers/chatGPT.composer'
 
 export class BotScenes {
   stage: Scenes.Stage<BotContext>
   changeLangComposer: ChangeLangComposer
+  chatGPTComposer: ChatGPTComposer
   constructor(
     private readonly bot: Telegraf<BotContext>,
     private readonly dbManger: DatabaseManager
   ) {
     this.changeLangComposer = new ChangeLangComposer(dbManger)
+    this.chatGPTComposer = new ChatGPTComposer(dbManger)
   }
 
   init = () => {
-    this.stage = new Scenes.Stage<BotContext>([this.changeLangScene()])
+    this.stage = new Scenes.Stage<BotContext>([this.changeLangScene(), this.chatGPTScene()])
     this.bot.use(this.stage.middleware())
   }
 
@@ -24,6 +27,14 @@ export class BotScenes {
       changeLangWizardId,
       this.changeLangComposer.startSettings(),
       this.changeLangComposer.switchLang()
-    ).command(`/${LanguageTextKeys.startCommand}`, ctx => ctx.scene.leave())
+    )
+  }
+
+  chatGPTScene = (): Scenes.WizardScene<BotContext> => {
+    return new Scenes.WizardScene<BotContext>(
+      chatGPTWizardId,
+      this.chatGPTComposer.startAsking(),
+      this.chatGPTComposer.handleQuestion()
+    )
   }
 }

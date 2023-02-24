@@ -28,7 +28,11 @@ export class ChangeLangComposer extends BaseComposer {
       composer.use(I18nClass.getInstance())
       composer.on(message('text'), async ctx => {
         const { text } = ctx.message
-        if (text === ctx.translate(LanguageTextKeys.backBtnText)) {
+        if (this.checkStartCommand(text)) {
+          await backToMain(ctx)
+          return ctx.scene.leave()
+        }
+        if (this.checkBackText(text, ctx)) {
           await this.showLanguagesKeyboard(ctx)
           return
         }

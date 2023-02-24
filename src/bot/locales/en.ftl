@@ -5,7 +5,7 @@ helloText =
 aboutBotText =
     The bot helps to work with <a href="https://en.wikipedia.org/wiki/ChatGPT">ChatGPT.</a> 😃
     Ask any interesting question and bot tries to answer them via ChatGPT.
-invalidLangWarn = ⚠ Invalid lang
+invalidLangWarn = ⚠ Invalid language
 continueText = Good!  Go on 😃
 chooseOption = Now choose option:
 shareText = Share

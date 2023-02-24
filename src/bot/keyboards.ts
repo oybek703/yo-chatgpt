@@ -22,3 +22,9 @@ export const getLanguagesKeyboard = (ctx: BotContext) =>
     [ctx.translate(LanguageTextKeys.enLangBtnText), ctx.translate(LanguageTextKeys.ruLangBtnText)],
     [ctx.translate(LanguageTextKeys.backBtnText)]
   ]).resize()
+
+export const getBackKeyboard = (ctx: BotContext) =>
+  Markup.keyboard([[ctx.translate(LanguageTextKeys.backBtnText)]]).resize()
+
+// export const getShareKeyboard = (ctx: BotContext) =>
+//   Markup.inlineKeyboard([{ text: ctx.translate(LanguageTextKeys.shareText), switch_inline_query: '' }]).resize()

@@ -1,11 +1,11 @@
 import { DatabaseManager } from '../database/database-manager'
 import { I18n } from '@grammyjs/i18n'
-import { changeLangWizardId, LanguageTextKeys } from './constants'
+import { changeLangWizardId, chatGPTWizardId, LanguageTextKeys } from './constants'
 import { I18nClass } from './locales/i18n.class'
 import { BotContext } from '../interfaces/bot.interfaces'
 import { BotCommand } from 'telegraf/typings/core/types/typegram'
 import { session, Telegraf } from 'telegraf'
-import { BotScenes } from './scenes/bot.scenes'
+import { BotScenes } from './scenes/bot-scenes'
 import { getSettingsKeyboard } from './keyboards'
 import { backToMain } from '../utils/bot.utils'
 
@@ -29,6 +29,7 @@ export class Handlers {
     this.scenes.init()
     this.bot.use(this.i18n)
     this.onStartCommand()
+    this.onAskQuestion()
     this.onSettings()
     this.onNavigateBack()
     this.onAboutBot()
@@ -43,6 +44,12 @@ export class Handlers {
       await ctx.replyWithHTML(ctx.translate(LanguageTextKeys.helloText))
       return backToMain(ctx)
     })
+  }
+
+  onAskQuestion = () => {
+    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.startChatBtnText), ctx =>
+      ctx.scene.enter(chatGPTWizardId)
+    )
   }
 
   onSettings = () => {

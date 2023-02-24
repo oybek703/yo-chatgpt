@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LanguageTextKeys = exports.botUserName = exports.chatGPTWizardId = exports.changeLangWizardId = void 0;
+exports.changeLangWizardId = 'change-language';
+exports.chatGPTWizardId = 'chatGPT';
+exports.botUserName = 't.me/@yochatgpt_bot';
+var LanguageTextKeys;
+(function (LanguageTextKeys) {
+    LanguageTextKeys["startCommand"] = "/start";
+    LanguageTextKeys["mainSelectOptions"] = "mainSelectOptions";
+    LanguageTextKeys["helloText"] = "helloText";
+    LanguageTextKeys["askQuestionText"] = "askQuestionText";
+    LanguageTextKeys["aboutBotText"] = "aboutBotText";
+    LanguageTextKeys["chooseSettingsText"] = "chooseSettingsText";
+    LanguageTextKeys["startChatBtnText"] = "startChatBtnText";
+    LanguageTextKeys["invalidLangWarn"] = "invalidLangWarn";
+    LanguageTextKeys["moreQuestionText"] = "moreQuestionText";
+    LanguageTextKeys["shareText"] = "shareText";
+    LanguageTextKeys["pleaseWait"] = "pleaseWait";
+    LanguageTextKeys["chooseOption"] = "chooseOption";
+    LanguageTextKeys["aboutBotBtnText"] = "aboutBotBtnText";
+    LanguageTextKeys["settingsBtnText"] = "settingsBtnText";
+    LanguageTextKeys["changeLanguageBtnText"] = "changeLanguageBtnText";
+    LanguageTextKeys["chooseLanguageText"] = "chooseLanguageText";
+    LanguageTextKeys["enLangBtnText"] = "enLangBtnText";
+    LanguageTextKeys["ruLangBtnText"] = "ruLangBtnText";
+    LanguageTextKeys["backBtnText"] = "backBtnText";
+})(LanguageTextKeys = exports.LanguageTextKeys || (exports.LanguageTextKeys = {}));
