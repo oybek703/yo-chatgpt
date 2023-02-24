@@ -9,6 +9,7 @@ export enum LanguageTextKeys {
   helloText = 'helloText',
   askQuestionText = 'askQuestionText',
   aboutBotText = 'aboutBotText',
+  chooseSettingsText = 'chooseSettingsText',
   startChatBtnText = 'startChatBtnText',
   continueText = 'continueText',
   shareText = 'shareText',

@@ -14,7 +14,7 @@ export class ScenesBase {
     this.changeLangComposer = new ChangeLangComposer(dbManger)
   }
 
-  init = async () => {
+  init = () => {
     this.stage = new Scenes.Stage([this.changeLangScene() as any])
     this.bot.use(this.stage.middleware())
   }

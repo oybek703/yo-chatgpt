@@ -10,3 +10,9 @@ export const getMainKeyboard = (ctx: BotContext) =>
       ctx.translate(LanguageTextKeys.settingsBtnText)
     ]
   ]).resize()
+
+export const getSettingsKeyboard = (ctx: BotContext) =>
+  Markup.keyboard([
+    [ctx.translate(LanguageTextKeys.changeLanguageBtnText)],
+    [ctx.translate(LanguageTextKeys.backBtnText)]
+  ]).resize()

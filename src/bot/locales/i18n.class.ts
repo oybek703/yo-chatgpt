@@ -1,16 +1,13 @@
 import { BotContext } from '../../interfaces/bot.interfaces'
 import { I18n } from '@grammyjs/i18n'
 import { join, resolve } from 'path'
-import { LanguageTextKeys } from '../constants'
 
 export class I18nClass {
   private static botI18N: I18n<BotContext>
 
-  static getSettingsBtnTexts = () => {
+  static hearsInLocales = (text: string) => {
     const locales = I18nClass.botI18N.locales
-    return locales.map(locale =>
-      I18nClass.botI18N.translate(locale, LanguageTextKeys.settingsBtnText)
-    )
+    return locales.map(locale => I18nClass.botI18N.translate(locale, text))
   }
 
   public static getInstance = (): I18n<BotContext> => {

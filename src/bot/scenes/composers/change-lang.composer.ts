@@ -7,7 +7,8 @@ export class ChangeLangComposer extends BaseComposer {
   startSettings = (): Composer<BotContext> => {
     return this.createComposer(composer => {
       composer.on(message('text'), async ctx => {
-        console.log('This is from composer => ', ctx.wizard)
+        const { text } = ctx.message
+        console.log('This is from composer => ', text)
       })
     })
   }

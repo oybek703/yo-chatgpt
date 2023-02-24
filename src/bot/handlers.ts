@@ -7,7 +7,7 @@ import { BotCommand } from 'telegraf/typings/core/types/typegram'
 import { Telegraf } from 'telegraf'
 import LocalSession from 'telegraf-session-local'
 import { ScenesBase } from './scenes/scenes.base'
-import { getMainKeyboard } from './keyboards'
+import { getMainKeyboard, getSettingsKeyboard } from './keyboards'
 
 export class Handlers {
   scenes: ScenesBase
@@ -26,27 +26,54 @@ export class Handlers {
   }
 
   init = async () => {
-    this.bot.use(this.session.middleware())
-    await this.scenes.init()
-    this.bot.use(this.i18n)
     await this.setBotCommands()
+    this.bot.use(this.session.middleware())
+    this.scenes.init()
+    this.bot.use(this.i18n)
     this.onStartCommand()
     this.onSettings()
+    this.onNavigateBack()
+    this.onAboutBot()
     await this.bot.launch()
   }
 
   setBotCommands = () => this.bot.telegram.setMyCommands(this.commands)
 
+  backToMain = (ctx: BotContext) => {
+    const mainKeyboard = getMainKeyboard(ctx)
+    return ctx.reply(ctx.translate(LanguageTextKeys.mainSelectOptions), mainKeyboard)
+  }
+
   onStartCommand = () => {
     this.bot.start(async (ctx: BotContext) => {
       await this.dbManager.saveUser(ctx.message?.from)
       await ctx.replyWithHTML(ctx.translate(LanguageTextKeys.helloText))
-      const mainKeyboard = getMainKeyboard(ctx)
-      return ctx.reply(ctx.translate(LanguageTextKeys.mainSelectOptions), mainKeyboard)
+      return this.backToMain(ctx)
     })
   }
 
   onSettings = () => {
-    this.bot.hears(I18nClass.getSettingsBtnTexts(), ctx => ctx.scene.enter(changeLangWizardId))
+    this.bot.hears(
+      I18nClass.hearsInLocales(LanguageTextKeys.settingsBtnText),
+      (ctx: BotContext) => {
+        const settingsKeyboard = getSettingsKeyboard(ctx)
+        return ctx.reply(ctx.translate(LanguageTextKeys.chooseSettingsText), settingsKeyboard)
+      }
+    )
+    this.bot.hears(I18nClass.hearsInLocales(LanguageTextKeys.changeLanguageBtnText), ctx =>
+      ctx.scene.enter(changeLangWizardId)
+    )
+  }
+
+  onNavigateBack = () => {
+    this.bot.hears(I18nClass.hearsInLocales(LanguageTextKeys.backBtnText), ctx =>
+      this.backToMain(ctx)
+    )
+  }
+
+  onAboutBot = () => {
+    this.bot.hears(I18nClass.hearsInLocales(LanguageTextKeys.aboutBotBtnText), ctx =>
+      ctx.reply(ctx.translate(LanguageTextKeys.aboutBotText))
+    )
   }
 }
