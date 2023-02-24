@@ -53,26 +53,23 @@ export class Handlers {
   }
 
   onSettings = () => {
-    this.bot.hears(
-      I18nClass.hearsInLocales(LanguageTextKeys.settingsBtnText),
-      (ctx: BotContext) => {
-        const settingsKeyboard = getSettingsKeyboard(ctx)
-        return ctx.reply(ctx.translate(LanguageTextKeys.chooseSettingsText), settingsKeyboard)
-      }
-    )
-    this.bot.hears(I18nClass.hearsInLocales(LanguageTextKeys.changeLanguageBtnText), ctx =>
+    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.settingsBtnText), (ctx: BotContext) => {
+      const settingsKeyboard = getSettingsKeyboard(ctx)
+      return ctx.reply(ctx.translate(LanguageTextKeys.chooseSettingsText), settingsKeyboard)
+    })
+    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.changeLanguageBtnText), ctx =>
       ctx.scene.enter(changeLangWizardId)
     )
   }
 
   onNavigateBack = () => {
-    this.bot.hears(I18nClass.hearsInLocales(LanguageTextKeys.backBtnText), ctx =>
+    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.backBtnText), ctx =>
       this.backToMain(ctx)
     )
   }
 
   onAboutBot = () => {
-    this.bot.hears(I18nClass.hearsInLocales(LanguageTextKeys.aboutBotBtnText), ctx =>
+    this.bot.hears(I18nClass.textInLocales(LanguageTextKeys.aboutBotBtnText), ctx =>
       ctx.reply(ctx.translate(LanguageTextKeys.aboutBotText))
     )
   }

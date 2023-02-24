@@ -5,7 +5,7 @@ import { join, resolve } from 'path'
 export class I18nClass {
   private static botI18N: I18n<BotContext>
 
-  static hearsInLocales = (text: string) => {
+  static textInLocales = (text: string) => {
     const locales = I18nClass.botI18N.locales
     return locales.map(locale => I18nClass.botI18N.translate(locale, text))
   }
