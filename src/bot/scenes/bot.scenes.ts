@@ -4,8 +4,8 @@ import { BotContext } from '../../interfaces/bot.interfaces'
 import { ChangeLangComposer } from './composers/change-lang.composer'
 import { changeLangWizardId, LanguageTextKeys } from '../constants'
 
-export class ScenesBase {
-  stage: Scenes.Stage<Scenes.SceneContext>
+export class BotScenes {
+  stage: Scenes.Stage<BotContext>
   changeLangComposer: ChangeLangComposer
   constructor(
     private readonly bot: Telegraf<BotContext>,
@@ -15,14 +15,15 @@ export class ScenesBase {
   }
 
   init = () => {
-    this.stage = new Scenes.Stage([this.changeLangScene() as any])
+    this.stage = new Scenes.Stage<BotContext>([this.changeLangScene()])
     this.bot.use(this.stage.middleware())
   }
 
   changeLangScene = (): Scenes.WizardScene<BotContext> => {
     return new Scenes.WizardScene<BotContext>(
       changeLangWizardId,
-      this.changeLangComposer.startSettings()
+      this.changeLangComposer.startSettings(),
+      this.changeLangComposer.switchLang()
     ).command(`/${LanguageTextKeys.startCommand}`, ctx => ctx.scene.leave())
   }
 }

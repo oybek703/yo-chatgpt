@@ -5,5 +5,6 @@ import { SceneContextScene, WizardContextWizard, WizardSessionData } from 'teleg
 export type BotContext = Context & {
   scene: SceneContextScene<any, WizardSessionData>
   wizard: WizardContextWizard<any>
-} & Scenes.SceneContext &
+} & Scenes.WizardContext &
+  Scenes.SceneContext &
   I18nFlavor
