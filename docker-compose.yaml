@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  chatgpt_bot:
+    container_name: chatgpt_bot
+    restart: always
+    build: .
+    environment:
+        - BOT_TOKEN:${BOT_TOKEN}
+        - CHATGPT_API_KEY:${CHATGPT_API_KEY}
+        - GROUP_ID:${GROUP_ID}
+        - PGHOST:${PGHOST}
+        - PGPORT:${PGPORT}
+        - PGUSER:${PGUSER}
+        - PGPASSWORD=${PGPASSWORD}
+        - PGDATABASE=${PGDATABASE}
+
