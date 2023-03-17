@@ -14,7 +14,7 @@ export class User {
   @Column({ nullable: true })
   userName?: string
 
-  @Column()
+  @Column({ type: 'text' })
   telegramUserId: number
 
   @CreateDateColumn()

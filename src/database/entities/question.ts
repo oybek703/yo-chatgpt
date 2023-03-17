@@ -8,7 +8,7 @@ export class Question {
   @Column()
   text: string
 
-  @Column()
+  @Column({ type: 'text' })
   telegramUserId: number
 
   @Column({ type: 'text' })
