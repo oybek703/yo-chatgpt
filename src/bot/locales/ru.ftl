@@ -23,4 +23,4 @@ ruLangBtnText = 🇷🇺 Русский
 enLangBtnText = 🇺🇸 English
 aboutBotBtnText = ℹ О боте
 backBtnText = ⏪ Назад
-
+temporaryUnavailable =

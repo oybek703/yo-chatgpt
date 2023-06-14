@@ -33,10 +33,19 @@ export class ChatGPTComposer extends BaseComposer {
         question.text = text
         question.telegramUserId = ctx.from.id
         question.askedAt = new Date()
-        const chatGptApi = await new ChatGPTClass().getApi()
-        const { text: apiResponseText } = await chatGptApi.sendMessage(text, {
-          timeoutMs: 2 * 60 * 1000
-        })
+        let apiResponseText
+        try {
+          const chatGptApi = await new ChatGPTClass().getApi()
+          apiResponseText = (
+            await chatGptApi.sendMessage(text, {
+              timeoutMs: 2 * 60 * 1000
+            })
+          ).text
+        } catch (e) {
+          console.log(`Error chat api request  ${e}`.red.bold)
+          apiResponseText = 'Please wait... ⌛'
+          await ctx.reply(ctx.translate(LanguageTextKeys.temporaryUnavailable))
+        }
         question.answerText = apiResponseText
         await ctx.deleteMessage(message_id)
         await ctx.reply(apiResponseText, {

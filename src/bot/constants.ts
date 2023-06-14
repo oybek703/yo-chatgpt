@@ -21,5 +21,6 @@ export enum LanguageTextKeys {
   chooseLanguageText = 'chooseLanguageText',
   enLangBtnText = 'enLangBtnText',
   ruLangBtnText = 'ruLangBtnText',
-  backBtnText = 'backBtnText'
+  backBtnText = 'backBtnText',
+  temporaryUnavailable = 'temporaryUnavailable'
 }

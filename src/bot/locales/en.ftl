@@ -23,4 +23,5 @@ ruLangBtnText = 🇷🇺 Русский
 enLangBtnText = 🇺🇸 English
 aboutBotBtnText = ℹ About bot
 backBtnText = ⏪ Back
+temporaryUnavailable = Я временно не работаю 😭. Пожалуйста, повторите попытку позже.
 
